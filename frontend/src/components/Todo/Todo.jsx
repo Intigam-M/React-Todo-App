@@ -4,17 +4,17 @@ import removeImage from '../../assets/trash.png'
 
 
 
-function Todo () {
+function Todo ({content, completed, onChecked, onDelete}) {
     return(
        <div className='Todo'>
             <div className="checkbox-div">
-                <Checkbox />
+                <Checkbox onChecked={onChecked} completed={completed} />
             </div>
-            <div className="content content-checked">
-               Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+            <div className={"content "+ (completed ? "content-checked" : "")}>
+               {content}
             </div>
             <div className="trash-div">
-                <img src={removeImage} alt="remove" />
+                <img onClick={onDelete} src={removeImage} alt="remove" />
             </div>
        </div>
     )
