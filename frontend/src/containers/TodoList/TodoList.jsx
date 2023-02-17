@@ -37,10 +37,32 @@ function TodoList () {
             newState.splice(todoIndex, 1)
             return newState
         })
-    }, todos)
+    }, [todos])
 
 
-    
+    const completeAllHandler=React.useCallback(()=>{
+        const url = "http://127.0.0.1:8000/api/complete-all-todo/";
+        axios.post(url)
+        .then(()=>{
+            setTodos(prevState => prevState.map(todo => ({...todo, completed:true})))
+        })
+    }, [])
+
+    const uncompleteAllHandler=React.useCallback(()=>{
+        const url = "http://127.0.0.1:8000/api/uncomplete-all-todo/";
+        axios.post(url)
+        .then(()=>{
+            setTodos(prevState => prevState.map(todo => ({...todo, completed:false})))
+        })
+    }, [])
+
+    const deleteAllHandler=React.useCallback(()=>{
+        const url = "http://127.0.0.1:8000/api/delete-all-todo/";
+        axios.post(url)
+        .then(()=>{
+            setTodos([])
+        })
+    }, [])
 
     return(
        <>
@@ -56,9 +78,9 @@ function TodoList () {
                 }
             </div>
             <div>
-                <button>Complete all tasks</button>
-                <button>Un complete all tasks</button>
-                <button>Delete all tasks</button>
+                <button onClick={completeAllHandler}>Complete all tasks</button>
+                <button onClick={uncompleteAllHandler}>Un complete all tasks</button>
+                <button onClick={deleteAllHandler}>Delete all tasks</button>
             </div>
        </>
     )

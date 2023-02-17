@@ -4,6 +4,7 @@ import AddTodo from './containers/AddTodo/AddTodo';
 import TodoList from './containers/TodoList/TodoList';
 import React from 'react';
 import axios from 'axios'
+import emptyImage from './assets/empty.png'
 
 
 export const todoContext = React.createContext(null)
@@ -44,9 +45,18 @@ const addTodoHandler = React.useCallback((content)=>{
                 <section className="add-todo-section">
                     <AddTodo onAddTodo={addTodoHandler}/>
                 </section>
-                <section className="todo-list-section">
-                    <TodoList />
-                </section>
+                {
+                    todos.length
+                    ?
+                    <section className="todo-list-section">
+                        <TodoList />
+                    </section>
+                    :
+                    <section className='completed-all'>
+                        <img src={emptyImage} alt="empty" />
+                        <p>No Task</p>
+                    </section>
+                }
             </div>
         </todoContext.Provider>
     </div>
